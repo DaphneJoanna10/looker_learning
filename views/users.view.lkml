@@ -1,5 +1,5 @@
 view: users {
-  sql_table_name: `sample_looker.users` ;;
+  sql_table_name: `Super_Store_Sales.Orders` ;;
   drill_fields: [user_id]
 
   dimension: user_id {
@@ -26,6 +26,16 @@ view: users {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.signup_date ;;
+  }
+  dimension: age {
+    type:  number
+    sql:  ${TABLE}.age ;;
+  }
+  dimension: age_tier {
+    type: tier
+    tiers: [18, 25, 35, 45, 55, 65, 75, 90]
+    style: integer
+    sql: ${age} ;;
   }
   measure: count {
     type: count

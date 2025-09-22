@@ -1,35 +1,33 @@
 view: new_view {
-  sql_table_name: `sample_looker.order_items` ;;
+  sql_table_name: `Super_Store_Sales.Orders` ;;
 
-  dimension: id {
+  dimension: user_id {
     primary_key: yes
     type: number
-    sql: ${TABLE}.id ;;
+    sql: ${TABLE}.user_id ;;
   }
-
   dimension: country {
     type: string
     map_layer_name: countries
     sql: ${TABLE}.country ;;
   }
-
   dimension: email {
     type: string
     sql: ${TABLE}.email ;;
   }
-
-  dimension: first_name {
+  dimension: name {
     type: string
-    sql: ${TABLE}.first_name ;;
+    sql: ${TABLE}.name ;;
   }
-
-  dimension: last_name {
-    type: string
-    sql: ${TABLE}.last_name ;;
+  dimension_group: signup {
+    type: time
+    timeframes: [raw, date, week, month, quarter, year]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.signup_date ;;
   }
-
   measure: count {
     type: count
-    drill_fields: [id, last_name, first_name]
+    drill_fields: [user_id, name]
   }
- }
+  }

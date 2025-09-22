@@ -1,5 +1,5 @@
 view: products {
-  sql_table_name: `sample_looker.products` ;;
+  sql_table_name: `Super_Store_Sales.products` ;;
   drill_fields: [product_id]
 
   dimension: product_id {
