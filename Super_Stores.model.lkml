@@ -11,3 +11,6 @@ explore: orders{
   }
 
 }
+
+explore: sql_runner_query {}
+explore: order_customer_summary {}
