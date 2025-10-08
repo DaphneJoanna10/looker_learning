@@ -21,6 +21,7 @@ view: order_details {
   dimension: customer_name {
     type: string
     sql: ${TABLE}.Customer_Name ;;
+    order_by_field: customer_id
   }
   dimension: discount {
     type: number

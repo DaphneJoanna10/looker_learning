@@ -95,24 +95,45 @@ view: orders {
     drill_fields: [order_id, customer_name, product_name, order_details.count]
   }
 
-  # Parameter to choose metric
-  parameter: metric_choice {
+  # # Parameter to choose metric
+  # parameter: metric_choice {
+  #   type: unquoted
+  #   allowed_value: { label: "Sales" value: "sales" }
+  #   allowed_value: { label: "Profit" value: "profit" }
+  #   default_value: "sales"
+  # }
+
+  #dynamic column
+  parameter: custom_filter_add_up {
     type: unquoted
-    allowed_value: { label: "Sales" value: "sales" }
-    allowed_value: { label: "Profit" value: "profit" }
-    default_value: "sales"
+    allowed_value: {
+      label: "Total Profit"
+      value: "profit"
+    }
+    allowed_value: {
+      label: "Total Sales"
+      value: "sales"
+    }
+  }
+
+  measure: dynamic_sum {
+    type: sum
+    sql: ${TABLE}.{% parameter item_to_add_up %} ;;
+    value_format_name: usd
   }
 
   # Dynamic measure controlled by parameter
-  measure: dynamic_metric {
-    type: number
-    sql:
-      CASE
-        WHEN {% parameter metric_choice %} = 'sales' THEN ${TABLE}.Sales
-        WHEN {% parameter metric_choice %} = 'profit' THEN ${TABLE}.Profit
-      END ;;
-    value_format_name: decimal_2
-    drill_fields: [order_id, customer_name, product_name]
-  }
+  # measure: dynamic_metric {
+  #   type: number
+  #   sql:
+  #     CASE
+  #       WHEN {% parameter metric_choice %} = 'sales' THEN ${TABLE}.Sales
+  #       WHEN {% parameter metric_choice %} = 'profit' THEN ${TABLE}.Profit
+  #     END ;;
+  #   value_format_name: decimal_2
+  #   drill_fields: [order_id, customer_name, product_name]
+  # }
+
+  required_access_grants: [d_sample]
 
 }
